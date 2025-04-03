@@ -1,6 +1,7 @@
 package com.ykcoding.recipefinderapp.data.remote.dto
 
 import com.squareup.moshi.JsonClass
+import com.ykcoding.recipefinderapp.domain.model.Recipes
 
 @JsonClass(generateAdapter = true)
 data class RecipesDto(
@@ -15,5 +16,14 @@ data class RecipesDto(
         val image: String,
         val imageType: String,
         val title: String
+    )
+}
+
+fun RecipesDto.toRecipes(): Recipes {
+    return Recipes(
+        number = number,
+        offset = offset,
+        results = results,
+        totalResults = totalResults
     )
 }

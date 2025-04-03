@@ -25,14 +25,22 @@ val networkModule = module {
         OkHttpClient.Builder()
             .addInterceptor(get<HttpLoggingInterceptor>())
             .addInterceptor { chain ->
-                val request = chain.request().newBuilder()
-                    .addHeader("Authorization", BuildConfig.API_KEYS)
+                val original = chain.request()
+                val originalUrl = original.url
+
+                val newUrl = originalUrl.newBuilder()
+                    .addQueryParameter("apiKey", BuildConfig.API_KEYS)
                     .build()
-                chain.proceed(request)
+
+                val newRequest = original.newBuilder()
+                    .url(newUrl)
+                    .build()
+
+                chain.proceed(newRequest)
             }
-            .connectTimeout(TIME_OUT.toLong(), TimeUnit.MILLISECONDS)
-            .readTimeout(TIME_OUT.toLong(), TimeUnit.MILLISECONDS)
-            .writeTimeout(TIME_OUT.toLong(), TimeUnit.MILLISECONDS)
+            .connectTimeout(TIME_OUT.toLong(), TimeUnit.SECONDS)
+            .readTimeout(TIME_OUT.toLong(), TimeUnit.SECONDS)
+            .writeTimeout(TIME_OUT.toLong(), TimeUnit.SECONDS)
             .retryOnConnectionFailure(true)
             .build()
     }
