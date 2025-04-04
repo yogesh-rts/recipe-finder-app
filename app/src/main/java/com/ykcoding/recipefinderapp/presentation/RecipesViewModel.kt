@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import org.koin.core.qualifier._q
 
 class RecipesViewModel(
     private val recipesUseCase: RecipesUseCase
@@ -16,10 +17,6 @@ class RecipesViewModel(
 
     private val _state = MutableStateFlow(RecipeListState())
     val state = _state.asStateFlow()
-
-    init {
-        getRecipes(query = "pasta", cuisine = null)
-    }
 
     fun getRecipes(query: String, cuisine: String?) {
         _state.value = RecipeListState(isLoading = true)
@@ -50,4 +47,28 @@ class RecipesViewModel(
             }
          */
     }
+
+    val categories = listOf(
+        "Appetizer",
+        "Breakfast",
+        "Main course",
+        "Snack",
+        "Side dish",
+        "Dessert",
+        "Beverages",
+    )
+
+    val cuisine = listOf(
+        "American",
+        "Chinese",
+        "European",
+        "Mediterranean",
+        "Indian",
+        "Italian",
+        "Korean ",
+        "Japanese",
+        "Mexican"
+    )
+
+
 }
