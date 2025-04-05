@@ -31,16 +31,17 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.ykcoding.recipefinderapp.presentation.ui.composables.recipe_search.ItemListView
+import com.ykcoding.recipefinderapp.presentation.ui.composables.recipe_search.FilterDialog
 import com.ykcoding.recipefinderapp.presentation.ui.composables.recipe_search.RecipeItem
 import com.ykcoding.recipefinderapp.presentation.ui.composables.recipe_search.SearchBar
 import com.ykcoding.recipefinderapp.presentation.ui.theme.CharcoalBlack
+import com.ykcoding.recipefinderapp.presentation.ui.theme.OnionPinkLighter
+import com.ykcoding.recipefinderapp.presentation.ui.theme.OnionPinkMuted
 import com.ykcoding.recipefinderapp.presentation.ui.theme.RecipeFinderAppTheme
 import com.ykcoding.recipefinderapp.presentation.utils.ProvideViewModel
 import com.ykcoding.recipefinderapp.presentation.utils.getProvidedViewModel
@@ -74,13 +75,15 @@ fun RecipeSearchScreenRoot(paddingValues: PaddingValues) {
 fun RecipeSearchScreen(paddingValues: PaddingValues) {
     val viewModel = getProvidedViewModel<RecipesViewModel>()
     var query by remember { mutableStateOf("") }
-    val recipes by viewModel.state.collectAsState()
+    var showDialog by remember { mutableStateOf(false) }
+    val recipes by viewModel.recipeListState.collectAsState()
+    val filterState by viewModel.filterState.collectAsState()
 
     Box(
         modifier = Modifier
             .fillMaxSize()
             .padding(paddingValues)
-            .background(color = Color.White)
+            .background(color = OnionPinkLighter)
     ) {
         Column(
             modifier = Modifier.padding(16.dp),
@@ -116,28 +119,23 @@ fun RecipeSearchScreen(paddingValues: PaddingValues) {
             SearchBar(
                 query = query,
                 onQueryChange = { query = it },
-                onClick = {
-                    viewModel.getRecipes(query = query, null)
-                }
+                onSearchClick = {
+                    viewModel.getRecipes(query = query, filterState.selectedCuisine)
+                },
+                onFilterClick = { showDialog = true }
             )
-            Spacer(modifier = Modifier.height(4.dp))
-            Text(
-                text = "Cuisine",
-                textAlign = TextAlign.Start,
-                fontSize = 18.sp,
-                fontWeight = FontWeight.SemiBold,
-                color = CharcoalBlack,
+            FilterDialog(
+                showDialog = showDialog,
+                cuisineOptions = viewModel.cuisine,
+                categoryOptions = viewModel.categories,
+                selectedCuisine = filterState.selectedCuisine,
+                selectedCategory = filterState.selectedCategory,
+                onCuisineSelected =  viewModel::selectCuisine,
+                onCategorySelected = viewModel::selectCategory,
+                onApply = { showDialog = false },
+                onDismiss = { showDialog = false },
+                onClear = viewModel::clearFilter
             )
-            ItemListView(viewModel.cuisine)
-            Spacer(modifier = Modifier.height(4.dp))
-            Text(
-                text = "Categories",
-                textAlign = TextAlign.Start,
-                fontSize = 18.sp,
-                fontWeight = FontWeight.SemiBold,
-                color = CharcoalBlack,
-            )
-            ItemListView(viewModel.categories)
             Box(
                 modifier = Modifier
                     .fillMaxSize()

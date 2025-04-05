@@ -4,29 +4,51 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ykcoding.recipefinderapp.domain.usecases.RecipesUseCase
 import com.ykcoding.recipefinderapp.helper.NetworkResponse
+import com.ykcoding.recipefinderapp.presentation.view_state.FilterState
 import com.ykcoding.recipefinderapp.presentation.view_state.RecipeListState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import org.koin.core.qualifier._q
+import kotlinx.coroutines.flow.update
 
 class RecipesViewModel(
     private val recipesUseCase: RecipesUseCase
 ): ViewModel() {
 
-    private val _state = MutableStateFlow(RecipeListState())
-    val state = _state.asStateFlow()
+    private val _recipeListState = MutableStateFlow(RecipeListState())
+    val recipeListState = _recipeListState.asStateFlow()
+
+    private val _filterState = MutableStateFlow(FilterState())
+    val filterState = _filterState.asStateFlow()
+
+    fun selectCuisine(cuisine: String) {
+        _filterState.update {
+            it.copy(selectedCuisine = cuisine)
+        }
+    }
+
+    fun clearFilter() {
+        _filterState.update {
+            it.copy(selectedCuisine = null, selectedCategory = null)
+        }
+    }
+
+    fun selectCategory(category: String) {
+        _filterState.update {
+            it.copy(selectedCategory = category)
+        }
+    }
 
     fun getRecipes(query: String, cuisine: String?) {
-        _state.value = RecipeListState(isLoading = true)
+        _recipeListState.value = RecipeListState(isLoading = true)
         recipesUseCase(query, cuisine).onEach { result ->
             when(result) {
                 is NetworkResponse.Success -> {
-                    _state.value = RecipeListState(isLoading = false, result = result.body)
+                    _recipeListState.value = RecipeListState(isLoading = false, result = result.body)
                 }
                 is NetworkResponse.Error -> {
-                    _state.value = RecipeListState(isLoading = false, error = result.handleErrorMessage())
+                    _recipeListState.value = RecipeListState(isLoading = false, error = result.handleErrorMessage())
                 }
             }
         }.launchIn(viewModelScope)
@@ -65,7 +87,7 @@ class RecipesViewModel(
         "Mediterranean",
         "Indian",
         "Italian",
-        "Korean ",
+        "Korean",
         "Japanese",
         "Mexican"
     )

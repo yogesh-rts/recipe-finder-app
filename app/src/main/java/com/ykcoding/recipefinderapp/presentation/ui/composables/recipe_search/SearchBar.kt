@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -21,6 +22,7 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,18 +31,23 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.ykcoding.recipefinderapp.R
 import com.ykcoding.recipefinderapp.presentation.ui.theme.CharcoalBlack
 import com.ykcoding.recipefinderapp.presentation.ui.theme.EmeraldGreen
+import com.ykcoding.recipefinderapp.presentation.ui.theme.OnionPinkLighter
+import com.ykcoding.recipefinderapp.presentation.ui.theme.OnionPinkMuted
 
 @Composable
 fun SearchBar(
     query: String,
     onQueryChange: (String) -> Unit,
-    onClick: () -> Unit
+    onSearchClick: () -> Unit,
+    onFilterClick: () -> Unit
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
     val interactionSource = remember { MutableInteractionSource() }
@@ -48,7 +55,7 @@ fun SearchBar(
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .background(Color.White)
+            .background(OnionPinkLighter)
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -58,7 +65,6 @@ fun SearchBar(
             Row(
                 modifier = Modifier
                     .heightIn(40.dp)
-                    .fillMaxWidth()
                     .weight(1f)
                     .border(
                     width = 2.dp,
@@ -88,7 +94,7 @@ fun SearchBar(
                     ),
                     keyboardActions = KeyboardActions(
                         onSend = {
-                            onClick()
+                            onSearchClick()
                             keyboardController?.hide()
                         }
                     ),
@@ -97,18 +103,30 @@ fun SearchBar(
                         if (query.isEmpty()) {
                             Text(
                                 text = "Search recipes",
-                                color = Color.Gray,
+                                color = Color.DarkGray,
                                 fontSize = 14.sp
                             )
                         }
                         innerTextField()
-                    }
+                    },
+                    modifier = Modifier.weight(1f)
                 )
+                IconButton(
+                    onClick = { onFilterClick.invoke() }
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_filter),
+                        contentDescription = "Filter icon",
+                        modifier = Modifier
+                            .padding(end = 16.dp)
+                            .size(20.dp)
+                    )
+                }
             }
             Button(
                 shape = RoundedCornerShape(20.dp),
                 border = BorderStroke(2.dp, EmeraldGreen),
-                onClick = { onClick.invoke() },
+                onClick = { onSearchClick.invoke() },
                 elevation = ButtonDefaults.elevatedButtonElevation(defaultElevation = 2.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = EmeraldGreen,
