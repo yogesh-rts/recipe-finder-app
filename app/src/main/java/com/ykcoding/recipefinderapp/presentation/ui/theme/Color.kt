@@ -17,4 +17,6 @@ val OnionPinkMuted = Color(0xFFEEC6C0)
 val WarmPearl = Color(0xFFE7E2DF)
 val SoftIvoryCream = Color(0xFFF9F4F2)
 val OnionPinkLighter = Color(0xFFF7DDD9)
+val Concrete = Color(0xFFF5F5F5)
+val MediumGray = Color(0xFFF5F2F2)
 

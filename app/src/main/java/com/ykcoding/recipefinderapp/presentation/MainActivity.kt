@@ -40,6 +40,7 @@ import com.ykcoding.recipefinderapp.presentation.ui.composables.recipe_search.Fi
 import com.ykcoding.recipefinderapp.presentation.ui.composables.recipe_search.RecipeItem
 import com.ykcoding.recipefinderapp.presentation.ui.composables.recipe_search.SearchBar
 import com.ykcoding.recipefinderapp.presentation.ui.theme.CharcoalBlack
+import com.ykcoding.recipefinderapp.presentation.ui.theme.Concrete
 import com.ykcoding.recipefinderapp.presentation.ui.theme.OnionPinkLighter
 import com.ykcoding.recipefinderapp.presentation.ui.theme.OnionPinkMuted
 import com.ykcoding.recipefinderapp.presentation.ui.theme.RecipeFinderAppTheme
@@ -83,7 +84,7 @@ fun RecipeSearchScreen(paddingValues: PaddingValues) {
         modifier = Modifier
             .fillMaxSize()
             .padding(paddingValues)
-            .background(color = OnionPinkLighter)
+            .background(color = Concrete)
     ) {
         Column(
             modifier = Modifier.padding(16.dp),
@@ -120,7 +121,11 @@ fun RecipeSearchScreen(paddingValues: PaddingValues) {
                 query = query,
                 onQueryChange = { query = it },
                 onSearchClick = {
-                    viewModel.getRecipes(query = query, filterState.selectedCuisine)
+                    viewModel.getRecipes(
+                        query = query,
+                        cuisine =  filterState.selectedCuisine,
+                        category = filterState.selectedCategory
+                    )
                 },
                 onFilterClick = { showDialog = true }
             )
@@ -145,9 +150,7 @@ fun RecipeSearchScreen(paddingValues: PaddingValues) {
                     CircularProgressIndicator()
                 } else if (recipes.result != null) {
                     recipes.result?.let {
-                        RecipeItem(
-                            recipeItems = it.results
-                        )
+                        RecipeItem(recipeItems = it.results)
                     }
                 } else {
                     // To be implemented

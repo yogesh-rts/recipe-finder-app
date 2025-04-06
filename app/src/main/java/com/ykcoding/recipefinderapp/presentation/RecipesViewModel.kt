@@ -40,9 +40,9 @@ class RecipesViewModel(
         }
     }
 
-    fun getRecipes(query: String, cuisine: String?) {
+    fun getRecipes(query: String, cuisine: String?, category: String?) {
         _recipeListState.value = RecipeListState(isLoading = true)
-        recipesUseCase(query, cuisine).onEach { result ->
+        recipesUseCase(query, cuisine, category).onEach { result ->
             when(result) {
                 is NetworkResponse.Success -> {
                     _recipeListState.value = RecipeListState(isLoading = false, result = result.body)

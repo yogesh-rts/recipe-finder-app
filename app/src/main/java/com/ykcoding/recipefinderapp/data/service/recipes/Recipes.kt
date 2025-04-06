@@ -11,6 +11,8 @@ interface Recipes {
     @GET(EndPoint.RECIPES + "/" + EndPoint.COMPLEX_SEARCH)
     suspend fun fetchRecipes(
         @Query(Param.QUERY) query: String?,
-        @Query(Param.CUISINE) cuisine: String?
+        @Query(Param.CUISINE) cuisine: String?,
+        @Query(Param.CATEGORY) category: String?,
+        @Query(Param.ADD_RECIPE_INFORMATION) addRecipeInformation: Boolean = true
     ): RecipesDto
 }

@@ -6,8 +6,12 @@ import com.ykcoding.recipefinderapp.domain.repo.RecipesRepo
 
 class RecipesRepoImpl(private val service: Recipes): RecipesRepo {
 
-    override suspend fun fetchRecipes(query: String?, cuisine: String?): RecipesDto {
-        return service.fetchRecipes(query = query, cuisine = cuisine)
+    override suspend fun fetchRecipes(query: String?, cuisine: String?, category: String?): RecipesDto {
+        return service.fetchRecipes(
+            query = query,
+            cuisine = cuisine,
+            category = category
+        )
     }
 
 }

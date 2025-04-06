@@ -11,9 +11,13 @@ import java.io.IOException
 
 class RecipesUseCase(val recipesRepo: RecipesRepo) {
 
-    operator fun invoke(query: String?, cuisine: String?): Flow<NetworkResponse<Recipes>> = flow {
+    operator fun invoke(query: String?, cuisine: String?, category: String?): Flow<NetworkResponse<Recipes>> = flow {
         try {
-            val response = recipesRepo.fetchRecipes(query = query, cuisine = cuisine).toRecipes()
+            val response = recipesRepo.fetchRecipes(
+                query = query,
+                cuisine = cuisine,
+                category = category
+            ).toRecipes()
             emit(NetworkResponse.Success(response))
         } catch (e: HttpException) {
             emit(NetworkResponse.Error.Api(code = e.code(), message = e.message()))

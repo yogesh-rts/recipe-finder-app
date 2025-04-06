@@ -15,7 +15,10 @@ data class RecipesDto(
         val id: Int,
         val image: String,
         val imageType: String,
-        val title: String
+        val title: String,
+        val readyInMinutes: Int,
+        val servings: Int,
+        val healthScore: Int
     )
 }
 
