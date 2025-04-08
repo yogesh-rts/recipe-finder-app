@@ -23,11 +23,13 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberBottomAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -36,13 +38,16 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.ykcoding.recipefinderapp.helper.BottomBarDestination
+import com.ykcoding.recipefinderapp.presentation.ui.composables.common.BottomNavigationBar
+import com.ykcoding.recipefinderapp.presentation.ui.composables.favorites.FavoritesScreenRoot
+import com.ykcoding.recipefinderapp.presentation.ui.composables.home.HomeScreen
+import com.ykcoding.recipefinderapp.presentation.ui.composables.home.HomeScreenRoot
 import com.ykcoding.recipefinderapp.presentation.ui.composables.recipe_search.FilterDialog
 import com.ykcoding.recipefinderapp.presentation.ui.composables.recipe_search.RecipeItem
 import com.ykcoding.recipefinderapp.presentation.ui.composables.recipe_search.SearchBar
 import com.ykcoding.recipefinderapp.presentation.ui.theme.CharcoalBlack
 import com.ykcoding.recipefinderapp.presentation.ui.theme.Concrete
-import com.ykcoding.recipefinderapp.presentation.ui.theme.OnionPinkLighter
-import com.ykcoding.recipefinderapp.presentation.ui.theme.OnionPinkMuted
 import com.ykcoding.recipefinderapp.presentation.ui.theme.RecipeFinderAppTheme
 import com.ykcoding.recipefinderapp.presentation.utils.ProvideViewModel
 import com.ykcoding.recipefinderapp.presentation.utils.getProvidedViewModel
@@ -55,8 +60,21 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             RecipeFinderAppTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    RecipeSearchScreenRoot(paddingValues = innerPadding)
+                var selectedTab by rememberSaveable { mutableStateOf(BottomBarDestination.HOME) }
+                Scaffold(
+                    modifier = Modifier.fillMaxSize(),
+                    bottomBar = {
+                        BottomNavigationBar(
+                            selectedTab = selectedTab,
+                            onItemClicked = { selectedTab = it }
+                        )
+                    }
+                ) { innerPadding ->
+                    when(selectedTab) {
+                        BottomBarDestination.HOME -> HomeScreenRoot(paddingValues = innerPadding)
+                        BottomBarDestination.SEARCH -> RecipeSearchScreenRoot(paddingValues = innerPadding)
+                        BottomBarDestination.FAVORITES -> FavoritesScreenRoot(paddingValues = innerPadding)
+                    }
                 }
             }
         }
