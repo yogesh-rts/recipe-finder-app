@@ -14,7 +14,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -41,30 +45,134 @@ import com.ykcoding.recipefinderapp.R
 import com.ykcoding.recipefinderapp.data.remote.dto.Result
 import com.ykcoding.recipefinderapp.helper.TimeUtils
 import com.ykcoding.recipefinderapp.presentation.ui.theme.CharcoalBlack
+import com.ykcoding.recipefinderapp.presentation.ui.theme.Concrete
 import com.ykcoding.recipefinderapp.presentation.ui.theme.RecipeFinderAppTheme
 import com.ykcoding.recipefinderapp.presentation.ui.theme.SageGreen
 
 @Composable
 fun RecipeInfoItemView(value: String, drawable: Int) {
     Row(
-        modifier = Modifier.wrapContentSize(),
+        modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(4.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Image(
             painter = painterResource(drawable),
             contentDescription = "Recipe Image",
-            modifier = Modifier
-                .size(20.dp)
+            modifier = Modifier.size(16.dp)
         )
         Text(
             text = value,
             fontWeight = FontWeight.ExtraBold,
-            fontSize = 14.sp,
+            fontSize = 10.sp,
             maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
             color = CharcoalBlack,
         )
+    }
+}
+
+@Composable
+fun Recipes(recipeItems: List<Result>) {
+    LazyVerticalGrid(columns = GridCells.Fixed(2)) {
+        items(recipeItems) { item ->
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .aspectRatio(3f / 4.3f)
+                    .padding(
+                        top = 64.dp,
+                        start = 4.dp,
+                        end = 4.dp
+                    ),
+                shape = RoundedCornerShape(20.dp),
+                colors = CardDefaults.cardColors(containerColor = SageGreen)
+            ) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(
+                            top = 16.dp,
+                            start = 8.dp,
+                            end = 8.dp
+                        ),
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .align(Alignment.BottomEnd)
+                            .padding(bottom = 8.dp)
+                    ) {
+                        Text(
+                            text = item.title,
+                            textAlign = TextAlign.Start,
+                            fontWeight = FontWeight.ExtraBold,
+                            fontSize = 12.sp,
+                            lineHeight = 24.sp,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                            color = CharcoalBlack,
+                        )
+                        Column(modifier = Modifier.fillMaxWidth()) {
+                            RecipeInfoItemView(
+                                value = item.servings.toString(),
+                                drawable = R.drawable.ic_persons
+                            )
+                            RecipeInfoItemView(
+                                value = TimeUtils.formatTime(item.readyInMinutes),
+                                drawable = R.drawable.ic_clock
+                            )
+                            RecipeInfoItemView(
+                                value = item.healthScore.toString(),
+                                drawable = R.drawable.ic_fire
+                            )
+                        }
+                    }
+                    IconButton(
+                        modifier = Modifier
+                            .align(Alignment.BottomEnd)
+                            .padding(bottom = 8.dp),
+                        onClick = { }
+                    ) {
+                        Icon(
+                            painter = painterResource(R.drawable.ic_chevron_right),
+                            contentDescription = "Forward Chevron",
+                            modifier = Modifier
+                                .align(Alignment.BottomEnd)
+                                .size(20.dp)
+                        )
+                    }
+                }
+            }
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 8.dp)
+            ) {
+                Column(
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    val imagePainter = rememberAsyncImagePainter(
+                        ImageRequest.Builder(LocalContext.current)
+                            .data(item.image)
+                            .crossfade(true)
+                            .build()
+                    )
+                    Image(
+                        painter = painterResource(R.drawable.ic_persons),
+                        contentDescription = "Recipe Image",
+                        modifier = Modifier
+                            .size(150.dp)
+                            .padding(4.dp)
+                            .align(Alignment.End)
+                            .background(
+                                color = Concrete,
+                                shape = CircleShape
+                            ),
+                        contentScale = ContentScale.Crop
+                    )
+                }
+            }
+        }
     }
 }
 
@@ -172,7 +280,7 @@ fun RecipesList(recipeItems: List<Result>) {
 @Composable
 fun Preview() {
     RecipeFinderAppTheme {
-        RecipesList(
+        Recipes(
             listOf(
                 Result(
                     id = 756814,

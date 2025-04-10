@@ -3,6 +3,7 @@ package com.ykcoding.recipefinderapp.presentation.ui.view_models
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ykcoding.recipefinderapp.domain.usecases.RecipesUseCase
+import com.ykcoding.recipefinderapp.helper.EventHandler
 import com.ykcoding.recipefinderapp.helper.NetworkResponse
 import com.ykcoding.recipefinderapp.presentation.view_state.FilterState
 import com.ykcoding.recipefinderapp.presentation.view_state.RecipeListState
@@ -45,10 +46,16 @@ class RecipesViewModel(
         recipesUseCase(query, cuisine, category).onEach { result ->
             when(result) {
                 is NetworkResponse.Success -> {
-                    _recipeListState.value = RecipeListState(isLoading = false, result = result.body)
+                    _recipeListState.value = RecipeListState(
+                        isLoading = false,
+                        result = result.body
+                    )
                 }
                 is NetworkResponse.Error -> {
-                    _recipeListState.value = RecipeListState(isLoading = false, error = result.handleErrorMessage())
+                    _recipeListState.value = RecipeListState(
+                        isLoading = false,
+                        error = EventHandler(result)
+                    )
                 }
             }
         }.launchIn(viewModelScope)

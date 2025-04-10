@@ -34,6 +34,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -42,6 +43,7 @@ import com.ykcoding.recipefinderapp.presentation.ui.composables.common.BottomNav
 import com.ykcoding.recipefinderapp.presentation.ui.composables.favorite.FavoriteScreenRoot
 import com.ykcoding.recipefinderapp.presentation.ui.composables.home.HomeScreenRoot
 import com.ykcoding.recipefinderapp.presentation.ui.composables.recipe_search.FilterDialog
+import com.ykcoding.recipefinderapp.presentation.ui.composables.recipe_search.Recipes
 import com.ykcoding.recipefinderapp.presentation.ui.composables.recipe_search.RecipesList
 import com.ykcoding.recipefinderapp.presentation.ui.composables.recipe_search.SearchBar
 import com.ykcoding.recipefinderapp.presentation.ui.theme.CharcoalBlack
@@ -167,10 +169,22 @@ fun RecipeSearchScreen(paddingValues: PaddingValues) {
                     CircularProgressIndicator()
                 } else if (recipes.result != null) {
                     recipes.result?.let {
-                        RecipesList(recipeItems = it.results)
+                        Recipes(recipeItems = it.results)
                     }
                 } else {
-                    // To be implemented
+                    recipes.error?.getContentIfNotHandled()?.handleErrorMessage()?.let { errorMessage ->
+                        Text(
+                            text = errorMessage,
+                            textAlign = TextAlign.Start,
+                            fontWeight = FontWeight.ExtraBold,
+                            fontSize = 16.sp,
+                            lineHeight = 24.sp,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                            color = CharcoalBlack,
+                            modifier = Modifier.padding(horizontal = 16.dp)
+                        )
+                    }
                 }
             }
         }

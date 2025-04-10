@@ -24,8 +24,6 @@ Aapp/src/test/java/com/ykcoding/recipefinderapp/ExampleUnitTest.kt,3/3/3325b806
 Lapp/src/main/java/com/ykcoding/recipefinderapp/presentation/ui/theme/Type.kt,0/f/0f058840f288ccdcf87d6cfc1046aa3651f95302
 €
 Papp/src/androidTest/java/com/ykcoding/recipefinderapp/ExampleInstrumentedTest.kt,b/1/b13c0d5a0f1feba413c7c2ee56ee020bbd47ae17
-x
-Happ/src/main/java/com/ykcoding/recipefinderapp/helper/NetworkResponse.kt,0/e/0e8f79bb4c1a80c77fa01c00e20832bc3f2ca124
 t
 Dapp/src/main/java/com/ykcoding/recipefinderapp/data/ServerManager.kt,7/4/74ea2dd71ac6c024f67ec0aa9f64de5f97d0508a
 C
