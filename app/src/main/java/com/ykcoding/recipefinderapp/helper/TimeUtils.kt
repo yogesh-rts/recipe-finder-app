@@ -10,9 +10,9 @@ object TimeUtils {
         val mins = duration.minusHours(hours).toMinutes()
 
         return when {
-            (hours > 0 && mins > 0 ) -> "$hours h $mins min"
+            (hours > 0 && mins > 0 ) -> "$hours hr $mins mins"
             (hours > 0) -> "$hours h"
-            else -> "$mins min"
+            else -> "$mins mins"
         }
     }
 }

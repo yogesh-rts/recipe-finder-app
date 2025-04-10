@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">RecipeFinderApp</string>
+
+    <string name="searchRecipes_recipesList_servingsSuffix">%d servings</string>
 </resources>

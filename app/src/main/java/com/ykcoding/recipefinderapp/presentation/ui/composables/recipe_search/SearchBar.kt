@@ -34,12 +34,15 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ykcoding.recipefinderapp.R
 import com.ykcoding.recipefinderapp.presentation.ui.theme.CharcoalBlack
 import com.ykcoding.recipefinderapp.presentation.ui.theme.Concrete
 import com.ykcoding.recipefinderapp.presentation.ui.theme.EmeraldGreen
+import com.ykcoding.recipefinderapp.presentation.ui.theme.RecipeFinderAppTheme
+import com.ykcoding.recipefinderapp.presentation.ui.theme.SageGreen
 
 @Composable
 fun SearchBar(
@@ -54,7 +57,7 @@ fun SearchBar(
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .background(Concrete)
+            .background(SageGreen)
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -141,5 +144,18 @@ fun SearchBar(
                 )
             }
         }
+    }
+}
+
+@Preview
+@Composable
+fun SearchBarPreview() {
+    RecipeFinderAppTheme {
+        SearchBar(
+          query = "Italian",
+          onQueryChange = { it },
+          onFilterClick = { },
+          onSearchClick = { }
+        )
     }
 }

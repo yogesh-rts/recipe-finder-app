@@ -20,7 +20,7 @@ class RecipesUseCase(val recipesRepo: RecipesRepo) {
             ).toRecipes()
             emit(NetworkResponse.Success(response))
         } catch (e: HttpException) {
-            emit(NetworkResponse.Error.Api(code = e.code(), message = e.message()))
+            emit(NetworkResponse.Error.Api(code = e.code()))
         } catch (e: IOException) {
             emit(NetworkResponse.Error.Network(error = e))
         } catch (e: Throwable) {

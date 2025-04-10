@@ -26,9 +26,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ykcoding.recipefinderapp.R
 import com.ykcoding.recipefinderapp.helper.BottomBarDestination
+import com.ykcoding.recipefinderapp.presentation.ui.theme.AvocadoGreen
+import com.ykcoding.recipefinderapp.presentation.ui.theme.BurntOrange
 import com.ykcoding.recipefinderapp.presentation.ui.theme.CharcoalBlack
 import com.ykcoding.recipefinderapp.presentation.ui.theme.CitrusOrange
+import com.ykcoding.recipefinderapp.presentation.ui.theme.DeepSageGreen
+import com.ykcoding.recipefinderapp.presentation.ui.theme.DustyEverGreen
+import com.ykcoding.recipefinderapp.presentation.ui.theme.EmeraldGreen
 import com.ykcoding.recipefinderapp.presentation.ui.theme.MediumGray
+import com.ykcoding.recipefinderapp.presentation.ui.theme.MutedForestGreen
+import com.ykcoding.recipefinderapp.presentation.ui.theme.OliveGreen
 import com.ykcoding.recipefinderapp.presentation.ui.theme.RecipeFinderAppTheme
 
 @Composable
@@ -79,7 +86,7 @@ fun BottomBarItemView(
     selectedTab: Boolean = false,
     onClick: () -> Unit
 ) {
-    val selectedColor = if (selectedTab) CitrusOrange else CharcoalBlack
+    val selectedColor = if (selectedTab) BurntOrange else CharcoalBlack
     Column(
         modifier = Modifier
             .padding(16.dp)

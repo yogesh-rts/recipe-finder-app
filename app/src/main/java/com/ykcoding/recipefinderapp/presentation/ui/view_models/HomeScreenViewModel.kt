@@ -3,6 +3,7 @@ package com.ykcoding.recipefinderapp.presentation.ui.view_models
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ykcoding.recipefinderapp.domain.usecases.RandomRecipesUseCase
+import com.ykcoding.recipefinderapp.helper.EventHandler
 import com.ykcoding.recipefinderapp.helper.NetworkResponse
 import com.ykcoding.recipefinderapp.presentation.view_state.RandomRecipeListState
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -34,7 +35,7 @@ class HomeScreenViewModel(
                 is NetworkResponse.Error -> {
                     _randomRecipes.value = RandomRecipeListState(
                         isLoading = false,
-                        error = response.handleErrorMessage()
+                        error = EventHandler(response)
                     )
                 }
             }
