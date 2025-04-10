@@ -1,4 +1,4 @@
-package com.ykcoding.recipefinderapp.presentation
+package com.ykcoding.recipefinderapp.presentation.ui.view_models
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

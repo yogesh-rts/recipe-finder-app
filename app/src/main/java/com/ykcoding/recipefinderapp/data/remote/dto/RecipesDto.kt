@@ -9,18 +9,7 @@ data class RecipesDto(
     val offset: Int,
     val results: List<Result>,
     val totalResults: Int
-) {
-    @JsonClass(generateAdapter = true)
-    data class Result(
-        val id: Int,
-        val image: String,
-        val imageType: String,
-        val title: String,
-        val readyInMinutes: Int,
-        val servings: Int,
-        val healthScore: Int
-    )
-}
+)
 
 fun RecipesDto.toRecipes(): Recipes {
     return Recipes(

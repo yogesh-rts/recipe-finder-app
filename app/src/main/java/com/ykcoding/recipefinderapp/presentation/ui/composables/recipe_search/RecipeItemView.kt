@@ -38,12 +38,11 @@ import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.ykcoding.recipefinderapp.R
-import com.ykcoding.recipefinderapp.data.remote.dto.RecipesDto
+import com.ykcoding.recipefinderapp.data.remote.dto.Result
 import com.ykcoding.recipefinderapp.helper.TimeUtils
 import com.ykcoding.recipefinderapp.presentation.ui.theme.CharcoalBlack
 import com.ykcoding.recipefinderapp.presentation.ui.theme.RecipeFinderAppTheme
 import com.ykcoding.recipefinderapp.presentation.ui.theme.SageGreen
-import java.time.Duration
 
 @Composable
 fun RecipeInfoItemView(value: String, drawable: Int) {
@@ -70,7 +69,7 @@ fun RecipeInfoItemView(value: String, drawable: Int) {
 }
 
 @Composable
-fun RecipeItem(recipeItems: List<RecipesDto.Result>) {
+fun RecipesList(recipeItems: List<Result>) {
     LazyColumn {
         items(recipeItems) { item ->
             Card(
@@ -173,9 +172,9 @@ fun RecipeItem(recipeItems: List<RecipesDto.Result>) {
 @Composable
 fun Preview() {
     RecipeFinderAppTheme {
-        RecipeItem(
+        RecipesList(
             listOf(
-                RecipesDto.Result(
+                Result(
                     id = 756814,
                     title = "Powerhouse Almond Matcha Superfood Smoothie",
                     imageType = "jpg",
@@ -184,7 +183,7 @@ fun Preview() {
                     healthScore = 40,
                     servings = 4
                 ),
-                RecipesDto.Result(
+                Result(
                     id = 756814,
                     title = "Powerhouse Almond Matcha Superfood Smoothie",
                     imageType = "jpg",
@@ -193,7 +192,7 @@ fun Preview() {
                     healthScore = 40,
                     servings = 4
                 ),
-                RecipesDto.Result(
+                Result(
                     id = 756814,
                     title = "Powerhouse Almond Matcha Superfood Smoothie",
                     imageType = "jpg",

@@ -23,7 +23,6 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberBottomAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -40,15 +39,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ykcoding.recipefinderapp.helper.BottomBarDestination
 import com.ykcoding.recipefinderapp.presentation.ui.composables.common.BottomNavigationBar
-import com.ykcoding.recipefinderapp.presentation.ui.composables.favorites.FavoritesScreenRoot
-import com.ykcoding.recipefinderapp.presentation.ui.composables.home.HomeScreen
+import com.ykcoding.recipefinderapp.presentation.ui.composables.favorite.FavoriteScreenRoot
 import com.ykcoding.recipefinderapp.presentation.ui.composables.home.HomeScreenRoot
 import com.ykcoding.recipefinderapp.presentation.ui.composables.recipe_search.FilterDialog
-import com.ykcoding.recipefinderapp.presentation.ui.composables.recipe_search.RecipeItem
+import com.ykcoding.recipefinderapp.presentation.ui.composables.recipe_search.RecipesList
 import com.ykcoding.recipefinderapp.presentation.ui.composables.recipe_search.SearchBar
 import com.ykcoding.recipefinderapp.presentation.ui.theme.CharcoalBlack
 import com.ykcoding.recipefinderapp.presentation.ui.theme.Concrete
 import com.ykcoding.recipefinderapp.presentation.ui.theme.RecipeFinderAppTheme
+import com.ykcoding.recipefinderapp.presentation.ui.view_models.RecipesViewModel
 import com.ykcoding.recipefinderapp.presentation.utils.ProvideViewModel
 import com.ykcoding.recipefinderapp.presentation.utils.getProvidedViewModel
 import org.koin.androidx.compose.koinViewModel
@@ -73,7 +72,7 @@ class MainActivity : ComponentActivity() {
                     when(selectedTab) {
                         BottomBarDestination.HOME -> HomeScreenRoot(paddingValues = innerPadding)
                         BottomBarDestination.SEARCH -> RecipeSearchScreenRoot(paddingValues = innerPadding)
-                        BottomBarDestination.FAVORITES -> FavoritesScreenRoot(paddingValues = innerPadding)
+                        BottomBarDestination.FAVORITES -> FavoriteScreenRoot(paddingValues = innerPadding)
                     }
                 }
             }
@@ -168,7 +167,7 @@ fun RecipeSearchScreen(paddingValues: PaddingValues) {
                     CircularProgressIndicator()
                 } else if (recipes.result != null) {
                     recipes.result?.let {
-                        RecipeItem(recipeItems = it.results)
+                        RecipesList(recipeItems = it.results)
                     }
                 } else {
                     // To be implemented

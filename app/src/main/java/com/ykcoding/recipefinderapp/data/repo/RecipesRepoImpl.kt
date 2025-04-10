@@ -1,5 +1,6 @@
 package com.ykcoding.recipefinderapp.data.repo
 
+import com.ykcoding.recipefinderapp.data.remote.dto.RandomRecipesDto
 import com.ykcoding.recipefinderapp.data.remote.dto.RecipesDto
 import com.ykcoding.recipefinderapp.data.service.recipes.Recipes
 import com.ykcoding.recipefinderapp.domain.repo.RecipesRepo
@@ -12,6 +13,10 @@ class RecipesRepoImpl(private val service: Recipes): RecipesRepo {
             cuisine = cuisine,
             category = category
         )
+    }
+
+    override suspend fun showRandomRecipes(): RandomRecipesDto {
+        return service.showRandomRecipes()
     }
 
 }

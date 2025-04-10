@@ -4,4 +4,5 @@ object EndPoint {
     const val RECIPES = "recipes"
     const val COMPLEX_SEARCH = "complexSearch"
     const val AUTOCOMPLETE = "autocomplete"
+    const val RANDOM_RECIPES = "random"
 }

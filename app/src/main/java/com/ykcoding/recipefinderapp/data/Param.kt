@@ -5,4 +5,6 @@ object Param {
     const val CUISINE = "cuisine"
     const val CATEGORY = "category"
     const val ADD_RECIPE_INFORMATION = "addRecipeInformation"
+    const val INCLUDE_NUTRITION = "includeNutrition"
+    const val NUMBER = "number"
 }

@@ -1,4 +1,4 @@
-package com.ykcoding.recipefinderapp.presentation.ui.composables.favorites
+package com.ykcoding.recipefinderapp.presentation.ui.composables.favorite
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -14,23 +14,23 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.ykcoding.recipefinderapp.presentation.RecipesViewModel
+import com.ykcoding.recipefinderapp.presentation.ui.view_models.RecipesViewModel
 import com.ykcoding.recipefinderapp.presentation.ui.theme.CharcoalBlack
 import com.ykcoding.recipefinderapp.presentation.ui.theme.Concrete
 import com.ykcoding.recipefinderapp.presentation.utils.ProvideViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun FavoritesScreenRoot(paddingValues: PaddingValues) {
+fun FavoriteScreenRoot(paddingValues: PaddingValues) {
     val viewModel: RecipesViewModel = koinViewModel()
 
     ProvideViewModel(viewModel = viewModel) {
-        FavoritesScreen(paddingValues)
+        FavoriteScreen(paddingValues)
     }
 }
 
 @Composable
-fun FavoritesScreen(paddingValues: PaddingValues) {
+fun FavoriteScreen(paddingValues: PaddingValues) {
     Box(
         modifier = Modifier
             .fillMaxSize()

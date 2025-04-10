@@ -40,8 +40,6 @@ import com.ykcoding.recipefinderapp.R
 import com.ykcoding.recipefinderapp.presentation.ui.theme.CharcoalBlack
 import com.ykcoding.recipefinderapp.presentation.ui.theme.Concrete
 import com.ykcoding.recipefinderapp.presentation.ui.theme.EmeraldGreen
-import com.ykcoding.recipefinderapp.presentation.ui.theme.OnionPinkLighter
-import com.ykcoding.recipefinderapp.presentation.ui.theme.OnionPinkMuted
 
 @Composable
 fun SearchBar(
