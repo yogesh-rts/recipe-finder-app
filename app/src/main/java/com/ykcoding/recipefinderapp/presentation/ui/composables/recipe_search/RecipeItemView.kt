@@ -45,6 +45,7 @@ import com.ykcoding.recipefinderapp.data.remote.dto.Result
 import com.ykcoding.recipefinderapp.helper.TimeUtils
 import com.ykcoding.recipefinderapp.presentation.ui.theme.CharcoalBlack
 import com.ykcoding.recipefinderapp.presentation.ui.theme.Concrete
+import com.ykcoding.recipefinderapp.presentation.ui.theme.ConcreteDark
 import com.ykcoding.recipefinderapp.presentation.ui.theme.RecipeFinderAppTheme
 import com.ykcoding.recipefinderapp.presentation.ui.theme.SageGreenMuted
 
@@ -79,7 +80,7 @@ fun RecipesRootView(recipeItems: List<Result>) {
         modifier = Modifier
             .fillMaxSize()
             .background(
-                color = Color.LightGray,
+                color = ConcreteDark,
                 shape = RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp)
             )
     ) {
@@ -87,7 +88,7 @@ fun RecipesRootView(recipeItems: List<Result>) {
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             Text(
-                text = "Here your recipes",
+                text = "Delicious Recipes Found",
                 textAlign = TextAlign.Start,
                 fontWeight = FontWeight.ExtraBold,
                 fontSize = 18.sp,
