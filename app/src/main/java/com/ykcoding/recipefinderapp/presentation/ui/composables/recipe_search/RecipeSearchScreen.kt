@@ -66,14 +66,13 @@ fun RecipeSearchScreen(paddingValues: PaddingValues) {
             .background(color = Concrete)
     ) {
         Column(
-            modifier = Modifier.fillMaxWidth(),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+            modifier = Modifier.fillMaxWidth()
         ) {
             Box(
                 modifier = Modifier
                     .background(
                         color = SageGreen,
-                        shape = RoundedCornerShape(20.dp)
+                        shape = RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp)
                     ),
             ) {
                 Column(
@@ -136,7 +135,6 @@ fun RecipeSearchScreen(paddingValues: PaddingValues) {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(top = 8.dp)
                     .wrapContentSize(align = Alignment.Center)
             ) {
                 if (recipes.isLoading) {

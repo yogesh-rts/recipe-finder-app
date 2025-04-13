@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.CircleShape
@@ -45,7 +46,6 @@ import com.ykcoding.recipefinderapp.data.remote.dto.Result
 import com.ykcoding.recipefinderapp.helper.TimeUtils
 import com.ykcoding.recipefinderapp.presentation.ui.theme.CharcoalBlack
 import com.ykcoding.recipefinderapp.presentation.ui.theme.Concrete
-import com.ykcoding.recipefinderapp.presentation.ui.theme.ConcreteDark
 import com.ykcoding.recipefinderapp.presentation.ui.theme.RecipeFinderAppTheme
 import com.ykcoding.recipefinderapp.presentation.ui.theme.SageGreenMuted
 
@@ -77,35 +77,30 @@ fun RecipeItemView(value: String, drawable: Int) {
 @Composable
 fun RecipesRootView(recipeItems: List<Result>) {
     Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(
-                color = ConcreteDark,
-                shape = RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp)
-            )
+        modifier = Modifier.fillMaxSize()
     ) {
-        Column(
-            verticalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            Text(
-                text = "Delicious Recipes Found",
-                textAlign = TextAlign.Start,
-                fontWeight = FontWeight.ExtraBold,
-                fontSize = 18.sp,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                color = CharcoalBlack,
-                modifier = Modifier.padding(horizontal = 8.dp, vertical = 16.dp)
-            )
-            RecipeListView(recipeItems = recipeItems)
-        }
+        RecipeListView(recipeItems = recipeItems)
     }
-
 }
 
 @Composable
 fun RecipeListView(recipeItems: List<Result>) {
     LazyVerticalGrid(columns = GridCells.Adaptive(160.dp)) {
+
+        item(span = { GridItemSpan(maxLineSpan) }) {
+            Text(
+                text = "Delicious Recipes Found",
+                textAlign = TextAlign.Start,
+                fontWeight = FontWeight.ExtraBold,
+                fontSize = 24.sp,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                color = CharcoalBlack,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 8.dp, vertical = 16.dp)
+            )
+        }
         items(recipeItems) { item ->
             Box(
                 modifier = Modifier

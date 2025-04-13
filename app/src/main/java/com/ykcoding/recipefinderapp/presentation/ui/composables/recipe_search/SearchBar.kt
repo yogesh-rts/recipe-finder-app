@@ -41,7 +41,6 @@ import com.ykcoding.recipefinderapp.R
 import com.ykcoding.recipefinderapp.presentation.ui.theme.CharcoalBlack
 import com.ykcoding.recipefinderapp.presentation.ui.theme.EmeraldGreen
 import com.ykcoding.recipefinderapp.presentation.ui.theme.RecipeFinderAppTheme
-import com.ykcoding.recipefinderapp.presentation.ui.theme.SageGreen
 
 @Composable
 fun SearchBar(
@@ -54,12 +53,11 @@ fun SearchBar(
     val interactionSource = remember { MutableInteractionSource() }
 
     Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(SageGreen)
+        modifier = Modifier.fillMaxWidth()
     ) {
         Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -68,10 +66,14 @@ fun SearchBar(
                     .heightIn(40.dp)
                     .weight(1f)
                     .border(
-                    width = 2.dp,
-                    shape = RoundedCornerShape(100),
-                    color = CharcoalBlack
-                ),
+                        width = 2.dp,
+                        shape = RoundedCornerShape(100),
+                        color = CharcoalBlack
+                    )
+                    .background(
+                        color = Color.White,
+                        shape = RoundedCornerShape(100)
+                    ),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Spacer(modifier = Modifier.width(16.dp))
