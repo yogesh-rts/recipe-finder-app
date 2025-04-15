@@ -2,6 +2,7 @@ package com.ykcoding.recipefinderapp.presentation.ui.view_models
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ykcoding.recipefinderapp.data.remote.dto.Result
 import com.ykcoding.recipefinderapp.domain.model.RandomRecipes
 import com.ykcoding.recipefinderapp.domain.model.Recipes
 import com.ykcoding.recipefinderapp.domain.usecases.RandomRecipesUseCase
@@ -15,6 +16,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -55,42 +57,57 @@ class HomeScreenViewModel(
         fourth: Flow<NetworkResponse<RandomRecipes>>
     ) {
 
-        collectRecipes(first) { body ->
-            _homeScreenUiState.update {
-                it.copy(popularRecipes = body.results)
+        collectRecipes(
+            flow = first,
+            mapData = { it.results },
+            updateState = { state, result ->
+                state.copy(popularRecipes = result)
             }
-        }
-        collectRecipes(second) { body ->
-            _homeScreenUiState.update {
-                it.copy(healthyRecipes = body.results)
+        )
+        collectRecipes(
+            flow = second,
+            mapData = { it.results },
+            updateState = { state, result ->
+                state.copy(quickRecipes = result)
             }
-        }
-        collectRecipes(third) { body ->
-            _homeScreenUiState.update {
-                it.copy(quickRecipes = body.results)
+        )
+        collectRecipes(
+            flow = third,
+            mapData = { it.results },
+            updateState = { state, result ->
+                state.copy(healthyRecipes = result)
             }
-        }
-        collectRecipes(fourth) { body ->
-            _homeScreenUiState.update {
-                it.copy(randomRecipes = body.results)
+        )
+        collectRecipes(
+            flow = fourth,
+            mapData = { it.results },
+            updateState = { state, result ->
+                state.copy(randomRecipes = result)
             }
-        }
+        )
     }
 
     private fun <T : Any> collectRecipes(
         flow: Flow<NetworkResponse<T>>,
-        onSuccess: (T) -> Unit
+        mapData: (T) -> List<Result>,
+        updateState: (HomeScreenUIState, HomeScreenUIState.SectionState) -> HomeScreenUIState
     ) {
-        flow.onEach { response ->
-            when(response) {
-                is NetworkResponse.Success -> onSuccess(response.body)
-                is NetworkResponse.Error -> {
-                    _homeScreenUiState.update {
-                        it.copy(error = EventHandler(response))
-                    }
+        flow
+            .onStart {
+                _homeScreenUiState.update {
+                    updateState(it, HomeScreenUIState.SectionState.IsLoading)
                 }
             }
-        }.launchIn(viewModelScope)
+            .onEach { response ->
+                val result = when(response) {
+                    is NetworkResponse.Success -> HomeScreenUIState.SectionState.Success(mapData(response.body))
+                    is NetworkResponse.Error -> HomeScreenUIState.SectionState.Error(EventHandler(response))
+                }
+                _homeScreenUiState.update { uiState ->
+                    updateState(uiState, result)
+                }
+
+            }.launchIn(viewModelScope)
     }
 
 }

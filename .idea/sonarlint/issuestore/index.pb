@@ -28,10 +28,6 @@ t
 Dapp/src/main/java/com/ykcoding/recipefinderapp/data/ServerManager.kt,7/4/74ea2dd71ac6c024f67ec0aa9f64de5f97d0508a
 C
 settings.gradle.kts,7/4/749edfcc96398253e5b3416184e95c46621da850
-I
-gradle/libs.versions.toml,d/7/d7595319a0658be6f1ed500ad590d42e4b28bc4f
-D
-app/build.gradle.kts,d/2/d2a4383452aad84a18429a5844d31330a012a9e6
 q
 Aapp/src/main/java/com/ykcoding/recipefinderapp/RecipeFinderApp.kt,b/6/b61f097422b4d5c941ac0d39a01dfa1352e7f1a7
 P

@@ -5,9 +5,14 @@ import com.ykcoding.recipefinderapp.helper.EventHandler
 import com.ykcoding.recipefinderapp.helper.NetworkResponse
 
 data class HomeScreenUIState(
-    val popularRecipes: List<Result> = emptyList(),
-    val healthyRecipes:  List<Result> = emptyList(),
-    val quickRecipes:  List<Result> = emptyList(),
-    val randomRecipes:  List<Result> = emptyList(),
-    val error: EventHandler<NetworkResponse.Error>? = null
-)
+    val popularRecipes: SectionState = SectionState.IsLoading,
+    val healthyRecipes: SectionState = SectionState.IsLoading,
+    val quickRecipes: SectionState = SectionState.IsLoading,
+    val randomRecipes: SectionState = SectionState.IsLoading,
+) {
+    sealed class SectionState {
+        data object IsLoading: SectionState()
+        data class Success(val body: List<Result>): SectionState()
+        data class Error(val error: EventHandler<NetworkResponse.Error>): SectionState()
+    }
+}

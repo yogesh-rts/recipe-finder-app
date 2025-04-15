@@ -6,7 +6,7 @@ import com.ykcoding.recipefinderapp.domain.usecases.RecipesUseCase
 import com.ykcoding.recipefinderapp.helper.EventHandler
 import com.ykcoding.recipefinderapp.helper.NetworkResponse
 import com.ykcoding.recipefinderapp.presentation.view_state.FilterState
-import com.ykcoding.recipefinderapp.presentation.view_state.SearchRecipeState
+import com.ykcoding.recipefinderapp.presentation.view_state.SearchRecipeUIState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.update
 
 class RecipesViewModel(private val recipesUseCase: RecipesUseCase): ViewModel() {
 
-    private val _searchRecipeState = MutableStateFlow(SearchRecipeState())
+    private val _searchRecipeState = MutableStateFlow(SearchRecipeUIState())
     val searchRecipeListState = _searchRecipeState.asStateFlow()
 
     private val _filterState = MutableStateFlow(FilterState())
@@ -40,17 +40,17 @@ class RecipesViewModel(private val recipesUseCase: RecipesUseCase): ViewModel() 
     }
 
     fun getRecipes(query: String, cuisine: String?, category: String?) {
-        _searchRecipeState.value = SearchRecipeState(isLoading = true)
+        _searchRecipeState.value = SearchRecipeUIState(isLoading = true)
         recipesUseCase(query, cuisine, category).onEach { result ->
             when(result) {
                 is NetworkResponse.Success -> {
-                    _searchRecipeState.value = SearchRecipeState(
+                    _searchRecipeState.value = SearchRecipeUIState(
                         isLoading = false,
                         result = result.body
                     )
                 }
                 is NetworkResponse.Error -> {
-                    _searchRecipeState.value = SearchRecipeState(
+                    _searchRecipeState.value = SearchRecipeUIState(
                         isLoading = false,
                         error = EventHandler(result)
                     )

@@ -85,6 +85,9 @@ dependencies {
     // Okhttp
     implementation(libs.okhttp.logger)
 
-    //Coil
+    // Coil
     implementation(libs.coil.compose)
+
+    // Lottie Animation
+    implementation(libs.lottie.compose)
 }

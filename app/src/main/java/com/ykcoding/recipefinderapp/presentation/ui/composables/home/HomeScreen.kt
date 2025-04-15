@@ -23,6 +23,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.ykcoding.recipefinderapp.data.remote.dto.Result
 import com.ykcoding.recipefinderapp.presentation.ui.theme.CharcoalBlack
 import com.ykcoding.recipefinderapp.presentation.ui.theme.Concrete
 import com.ykcoding.recipefinderapp.presentation.ui.theme.EmeraldGreen
@@ -30,6 +31,7 @@ import com.ykcoding.recipefinderapp.presentation.ui.theme.RecipeFinderAppTheme
 import com.ykcoding.recipefinderapp.presentation.ui.view_models.HomeScreenViewModel
 import com.ykcoding.recipefinderapp.presentation.utils.ProvideViewModel
 import com.ykcoding.recipefinderapp.presentation.utils.getProvidedViewModel
+import com.ykcoding.recipefinderapp.presentation.view_state.HomeScreenUIState
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -61,15 +63,15 @@ fun HomeScreen(paddingValues: PaddingValues) {
             Spacer(modifier = Modifier.height(8.dp))
             RecipeSection("Chef's Pick for you")
             RecipesHorizontalListView(
-                recipesList = state.randomRecipes,
+                state = state.randomRecipes,
                 cardAspectRatio = 3f / 3.5f,
                 textSize = 14.sp,
-                imageWidth = 175.dp
+                imageWidth = 175.dp,
             )
             Spacer(modifier = Modifier.height(16.dp))
             RecipeSection("What’s Trending")
             RecipesHorizontalListView(
-                recipesList = state.popularRecipes,
+                state = state.popularRecipes,
                 cardAspectRatio = 4f / 2f,
                 textSize = 16.sp,
                 imageWidth = 300.dp
@@ -77,7 +79,7 @@ fun HomeScreen(paddingValues: PaddingValues) {
             Spacer(modifier = Modifier.height(16.dp))
             RecipeSection("Under 30 Minutes")
             RecipesHorizontalListView(
-                recipesList = state.quickRecipes,
+                state = state.quickRecipes,
                 cardAspectRatio = 4f / 2.75f,
                 textSize = 12.sp,
                 imageWidth = 130.dp
@@ -85,7 +87,7 @@ fun HomeScreen(paddingValues: PaddingValues) {
             Spacer(modifier = Modifier.height(16.dp))
             RecipeSection("Healthy Plates")
             RecipesHorizontalListView(
-                recipesList = state.healthyRecipes,
+                state = state.healthyRecipes,
                 cardAspectRatio = 4f / 2f,
                 textSize = 14.sp,
                 imageWidth = 225.dp
