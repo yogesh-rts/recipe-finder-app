@@ -15,6 +15,10 @@ class RecipesRepoImpl(private val service: Recipes): RecipesRepo {
         )
     }
 
+    override suspend fun showRecipes(sort: String?, maxReadyTime: Int?): RecipesDto {
+        return service.fetchRecipes(sort = sort, maxReadyTime = maxReadyTime)
+    }
+
     override suspend fun showRandomRecipes(): RandomRecipesDto {
         return service.showRandomRecipes()
     }

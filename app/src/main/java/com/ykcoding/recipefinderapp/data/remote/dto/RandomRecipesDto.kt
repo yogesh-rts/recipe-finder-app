@@ -9,5 +9,5 @@ data class RandomRecipesDto(
 )
 
 fun RandomRecipesDto.toRandomRecipes(): RandomRecipes {
-    return RandomRecipes(recipes = recipes)
+    return RandomRecipes(results = recipes)
 }

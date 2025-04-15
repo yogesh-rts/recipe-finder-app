@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -42,7 +44,8 @@ fun HomeScreenRoot(paddingValues: PaddingValues) {
 @Composable
 fun HomeScreen(paddingValues: PaddingValues) {
     val viewModel = getProvidedViewModel<HomeScreenViewModel>()
-    val randomRecipes by viewModel.randomRecipes.collectAsState()
+    val scrollState = rememberScrollState()
+    val state by viewModel.homeScreenUiState.collectAsState()
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -50,7 +53,9 @@ fun HomeScreen(paddingValues: PaddingValues) {
             .background(color = Concrete)
     ) {
         Column(
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier
+                .padding(16.dp)
+                .verticalScroll(scrollState),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             Spacer(modifier = Modifier.height(8.dp))
@@ -58,7 +63,7 @@ fun HomeScreen(paddingValues: PaddingValues) {
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
-                    text = "Recommended for you",
+                    text = "Chef's Pick for you",
                     textAlign = TextAlign.Start,
                     fontSize = 24.sp,
                     fontWeight = FontWeight.ExtraBold,
@@ -74,11 +79,10 @@ fun HomeScreen(paddingValues: PaddingValues) {
                 )
 
             }
-
-            randomRecipes.result?.recipes?.let {
-                RandomRecipesList(recipesList = it)
-            }
-
+            RandomRecipesList(recipesList = state.randomRecipes)
+            RandomRecipesList(recipesList = state.popularRecipes)
+            RandomRecipesList(recipesList = state.quickRecipes)
+            RandomRecipesList(recipesList = state.healthyRecipes)
         }
     }
 

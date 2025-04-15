@@ -7,5 +7,5 @@ import org.koin.dsl.module
 
 val viewModelModule = module {
     viewModel { RecipesViewModel(recipesUseCase = get()) }
-    viewModel { HomeScreenViewModel(randomRecipesUseCase = get()) }
+    viewModel { HomeScreenViewModel(randomRecipesUseCase = get(), recipesUseCase = get()) }
 }

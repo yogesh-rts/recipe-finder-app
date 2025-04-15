@@ -7,6 +7,8 @@ interface RecipesRepo {
 
     suspend fun fetchRecipes(query: String?, cuisine: String?, category: String?): RecipesDto
 
+    suspend fun showRecipes(sort: String?, maxReadyTime: Int?): RecipesDto
+
     suspend fun showRandomRecipes(): RandomRecipesDto
 
 }

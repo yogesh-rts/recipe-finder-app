@@ -7,4 +7,6 @@ object Param {
     const val ADD_RECIPE_INFORMATION = "addRecipeInformation"
     const val INCLUDE_NUTRITION = "includeNutrition"
     const val NUMBER = "number"
+    const val SORT = "sort"
+    const val MAX_READY_TIME = "maxReadyTime"
 }

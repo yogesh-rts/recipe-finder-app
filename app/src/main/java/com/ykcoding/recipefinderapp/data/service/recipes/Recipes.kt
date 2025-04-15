@@ -17,6 +17,17 @@ interface Recipes {
         @Query(Param.ADD_RECIPE_INFORMATION) addRecipeInformation: Boolean = true
     ): RecipesDto
 
+
+    @GET(EndPoint.RECIPES + "/" + EndPoint.COMPLEX_SEARCH)
+    suspend fun fetchRecipes(
+        @Query(Param.SORT) sort: String? = null,
+        @Query(Param.MAX_READY_TIME) maxReadyTime: Int? = null,
+        @Query("number") number: Int = 10,
+        @Query(Param.ADD_RECIPE_INFORMATION) addRecipeInformation: Boolean = true
+    ): RecipesDto
+
+
+
     @GET(EndPoint.RECIPES + "/" + EndPoint.RANDOM_RECIPES)
     suspend fun showRandomRecipes(
         @Query(Param.INCLUDE_NUTRITION) includeNutrition: Boolean = true,

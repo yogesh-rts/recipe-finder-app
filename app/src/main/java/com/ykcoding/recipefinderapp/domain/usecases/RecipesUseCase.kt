@@ -27,4 +27,20 @@ class RecipesUseCase(val recipesRepo: RecipesRepo) {
             emit(NetworkResponse.Error.Unknown(error = e))
         }
     }
+
+    operator fun invoke(sort: String?, maxReadyTime: Int?): Flow<NetworkResponse<Recipes>> = flow {
+        try {
+            val response = recipesRepo.showRecipes(
+                sort = sort,
+                maxReadyTime = maxReadyTime,
+            ).toRecipes()
+            emit(NetworkResponse.Success(response))
+        } catch (e: HttpException) {
+            emit(NetworkResponse.Error.Api(code = e.code()))
+        } catch (e: IOException) {
+            emit(NetworkResponse.Error.Network(error = e))
+        } catch (e: Throwable) {
+            emit(NetworkResponse.Error.Unknown(error = e))
+        }
+    }
 }
