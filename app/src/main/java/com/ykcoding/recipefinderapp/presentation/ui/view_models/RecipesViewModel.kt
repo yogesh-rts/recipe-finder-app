@@ -6,19 +6,17 @@ import com.ykcoding.recipefinderapp.domain.usecases.RecipesUseCase
 import com.ykcoding.recipefinderapp.helper.EventHandler
 import com.ykcoding.recipefinderapp.helper.NetworkResponse
 import com.ykcoding.recipefinderapp.presentation.view_state.FilterState
-import com.ykcoding.recipefinderapp.presentation.view_state.RecipeListState
+import com.ykcoding.recipefinderapp.presentation.view_state.SearchRecipeState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 
-class RecipesViewModel(
-    private val recipesUseCase: RecipesUseCase
-): ViewModel() {
+class RecipesViewModel(private val recipesUseCase: RecipesUseCase): ViewModel() {
 
-    private val _recipeListState = MutableStateFlow(RecipeListState())
-    val recipeListState = _recipeListState.asStateFlow()
+    private val _searchRecipeState = MutableStateFlow(SearchRecipeState())
+    val searchRecipeListState = _searchRecipeState.asStateFlow()
 
     private val _filterState = MutableStateFlow(FilterState())
     val filterState = _filterState.asStateFlow()
@@ -42,17 +40,17 @@ class RecipesViewModel(
     }
 
     fun getRecipes(query: String, cuisine: String?, category: String?) {
-        _recipeListState.value = RecipeListState(isLoading = true)
+        _searchRecipeState.value = SearchRecipeState(isLoading = true)
         recipesUseCase(query, cuisine, category).onEach { result ->
             when(result) {
                 is NetworkResponse.Success -> {
-                    _recipeListState.value = RecipeListState(
+                    _searchRecipeState.value = SearchRecipeState(
                         isLoading = false,
                         result = result.body
                     )
                 }
                 is NetworkResponse.Error -> {
-                    _recipeListState.value = RecipeListState(
+                    _searchRecipeState.value = SearchRecipeState(
                         isLoading = false,
                         error = EventHandler(result)
                     )

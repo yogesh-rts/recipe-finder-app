@@ -59,33 +59,62 @@ fun HomeScreen(paddingValues: PaddingValues) {
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             Spacer(modifier = Modifier.height(8.dp))
-            Row(
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text(
-                    text = "Chef's Pick for you",
-                    textAlign = TextAlign.Start,
-                    fontSize = 24.sp,
-                    fontWeight = FontWeight.ExtraBold,
-                    color = CharcoalBlack,
-                )
-                Text(
-                    text = "see all",
-                    textAlign = TextAlign.End,
-                    fontSize = 12.sp,
-                    fontWeight = FontWeight.Normal,
-                    color = EmeraldGreen,
-                    modifier = Modifier.weight(1f)
-                )
-
-            }
-            RandomRecipesList(recipesList = state.randomRecipes)
-            RandomRecipesList(recipesList = state.popularRecipes)
-            RandomRecipesList(recipesList = state.quickRecipes)
-            RandomRecipesList(recipesList = state.healthyRecipes)
+            RecipeSection("Chef's Pick for you")
+            RecipesHorizontalListView(
+                recipesList = state.randomRecipes,
+                cardAspectRatio = 3f / 3.5f,
+                textSize = 14.sp,
+                imageWidth = 175.dp
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            RecipeSection("What’s Trending")
+            RecipesHorizontalListView(
+                recipesList = state.popularRecipes,
+                cardAspectRatio = 4f / 2f,
+                textSize = 16.sp,
+                imageWidth = 300.dp
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            RecipeSection("Under 30 Minutes")
+            RecipesHorizontalListView(
+                recipesList = state.quickRecipes,
+                cardAspectRatio = 4f / 2.75f,
+                textSize = 12.sp,
+                imageWidth = 130.dp
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            RecipeSection("Healthy Plates")
+            RecipesHorizontalListView(
+                recipesList = state.healthyRecipes,
+                cardAspectRatio = 4f / 2f,
+                textSize = 14.sp,
+                imageWidth = 225.dp
+            )
         }
     }
+}
 
+@Composable
+fun RecipeSection(title: String) {
+    Row(
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Text(
+            text = title,
+            textAlign = TextAlign.Start,
+            fontSize = 22.sp,
+            fontWeight = FontWeight.ExtraBold,
+            color = CharcoalBlack,
+        )
+        Text(
+            text = "see all",
+            textAlign = TextAlign.End,
+            fontSize = 12.sp,
+            fontWeight = FontWeight.Normal,
+            color = EmeraldGreen,
+            modifier = Modifier.weight(1f)
+        )
+    }
 }
 
 @Preview(showBackground = true)

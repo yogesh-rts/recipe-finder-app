@@ -56,7 +56,7 @@ fun RecipeSearchScreen(paddingValues: PaddingValues) {
     val viewModel = getProvidedViewModel<RecipesViewModel>()
     var query by remember { mutableStateOf("") }
     var showDialog by remember { mutableStateOf(false) }
-    val recipes by viewModel.recipeListState.collectAsState()
+    val recipes by viewModel.searchRecipeListState.collectAsState()
     val filterState by viewModel.filterState.collectAsState()
 
     Box(

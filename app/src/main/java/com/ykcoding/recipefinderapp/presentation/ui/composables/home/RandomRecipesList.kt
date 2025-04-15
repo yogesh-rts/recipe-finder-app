@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -22,6 +23,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
@@ -31,20 +34,23 @@ import com.ykcoding.recipefinderapp.presentation.ui.theme.Concrete
 import com.ykcoding.recipefinderapp.presentation.ui.theme.RecipeFinderAppTheme
 
 @Composable
-fun RandomRecipesList(recipesList: List<Result>) {
+fun RecipesHorizontalListView(
+    recipesList: List<Result>,
+    cardAspectRatio: Float,
+    textSize: TextUnit = TextUnit.Unspecified,
+    imageWidth: Dp = Dp.Unspecified
+) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .background(color = Concrete)
     ) {
-        LazyRow(
-            modifier = Modifier.fillMaxWidth()
-        ) {
+        LazyRow(modifier = Modifier.fillMaxWidth()) {
             items(recipesList) { item ->
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(8.dp),
+                        .padding(horizontal = 8.dp),
                     verticalArrangement = Arrangement.spacedBy(4.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
@@ -66,17 +72,20 @@ fun RandomRecipesList(recipesList: List<Result>) {
                             contentDescription = "Recipes Image",
                             modifier = Modifier
                                 .align(Alignment.CenterHorizontally)
-                                .width(150.dp)
-                                .aspectRatio(3f / 3.5f),
+                                .width(imageWidth)
+                                .aspectRatio(cardAspectRatio),
                             contentScale = ContentScale.Crop
                         )
                     }
                     Text(
-                        text = item.title.take(20).plus("..."),
+                        text = item.title,
                         maxLines = 1,
-                        fontSize = 14.sp,
+                        fontSize = textSize,
                         overflow = TextOverflow.Ellipsis,
-                        softWrap = false
+                        modifier = Modifier
+                            .align(Alignment.CenterHorizontally)
+                            .width(imageWidth)
+                            .padding(horizontal = 16.dp)
                     )
                 }
             }
@@ -89,7 +98,7 @@ fun RandomRecipesList(recipesList: List<Result>) {
 @Composable
 fun RandomRecipesPreview() {
     RecipeFinderAppTheme {
-        RandomRecipesList(
+        RecipesHorizontalListView(
             listOf(
                 Result(
                     id = 756814,
@@ -118,7 +127,10 @@ fun RandomRecipesPreview() {
                     healthScore = 40,
                     servings = 4
                 ),
-            )
+            ),
+            cardAspectRatio = 4f / 2.5f,
+            textSize = 14.sp,
+            imageWidth = 300.dp,
         )
     }
 }
