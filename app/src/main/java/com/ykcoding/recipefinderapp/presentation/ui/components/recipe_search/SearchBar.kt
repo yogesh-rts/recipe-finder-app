@@ -1,4 +1,4 @@
-package com.ykcoding.recipefinderapp.presentation.ui.composables.recipe_search
+package com.ykcoding.recipefinderapp.presentation.ui.components.recipe_search
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background

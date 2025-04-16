@@ -1,4 +1,4 @@
-package com.ykcoding.recipefinderapp.presentation.ui.composables.favorite
+package com.ykcoding.recipefinderapp.presentation.ui.components.favorite
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

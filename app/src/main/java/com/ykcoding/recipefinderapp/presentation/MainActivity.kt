@@ -14,10 +14,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.ykcoding.recipefinderapp.helper.BottomBarDestination
-import com.ykcoding.recipefinderapp.presentation.ui.composables.common.BottomNavigationBar
-import com.ykcoding.recipefinderapp.presentation.ui.composables.favorite.FavoriteScreenRoot
-import com.ykcoding.recipefinderapp.presentation.ui.composables.home.HomeScreenRoot
-import com.ykcoding.recipefinderapp.presentation.ui.composables.recipe_search.RecipeSearchScreenRoot
+import com.ykcoding.recipefinderapp.presentation.ui.components.common.BottomNavigationBar
+import com.ykcoding.recipefinderapp.presentation.ui.components.favorite.FavoriteScreenRoot
+import com.ykcoding.recipefinderapp.presentation.ui.components.home.HomeScreenRoot
+import com.ykcoding.recipefinderapp.presentation.ui.components.recipe_search.RecipeSearchScreenRoot
 import com.ykcoding.recipefinderapp.presentation.ui.theme.RecipeFinderAppTheme
 
 class MainActivity : ComponentActivity() {

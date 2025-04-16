@@ -1,4 +1,4 @@
-package com.ykcoding.recipefinderapp.presentation.ui.composables.home
+package com.ykcoding.recipefinderapp.presentation.ui.components.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -24,15 +23,12 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.ykcoding.recipefinderapp.data.remote.dto.Result
-import com.ykcoding.recipefinderapp.presentation.ui.composables.common.ErrorCardView
-import com.ykcoding.recipefinderapp.presentation.ui.composables.common.setErrorAnimation
+import com.ykcoding.recipefinderapp.presentation.ui.components.common.ErrorCardView
+import com.ykcoding.recipefinderapp.presentation.ui.components.config.RecipeCardConfig
 import com.ykcoding.recipefinderapp.presentation.ui.theme.Concrete
 import com.ykcoding.recipefinderapp.presentation.ui.theme.RecipeFinderAppTheme
 import com.ykcoding.recipefinderapp.presentation.view_state.HomeScreenUIState
@@ -40,9 +36,7 @@ import com.ykcoding.recipefinderapp.presentation.view_state.HomeScreenUIState
 @Composable
 fun RecipesHorizontalListView(
     state: HomeScreenUIState.SectionState,
-    cardAspectRatio: Float,
-    textSize: TextUnit = TextUnit.Unspecified,
-    imageWidth: Dp = Dp.Unspecified
+    config: RecipeCardConfig,
 ) {
 
     val (uiState, recipeItems) = when(state) {
@@ -109,19 +103,19 @@ fun RecipesHorizontalListView(
                                     contentDescription = "Recipes Image",
                                     modifier = Modifier
                                         .align(Alignment.CenterHorizontally)
-                                        .width(imageWidth)
-                                        .aspectRatio(cardAspectRatio),
+                                        .width(config.imageWidth)
+                                        .aspectRatio(config.cardAspectRatio),
                                     contentScale = ContentScale.Crop
                                 )
                             }
                             Text(
                                 text = item.title,
                                 maxLines = 1,
-                                fontSize = textSize,
+                                fontSize = config.textSize,
                                 overflow = TextOverflow.Ellipsis,
                                 modifier = Modifier
                                     .align(Alignment.CenterHorizontally)
-                                    .width(imageWidth)
+                                    .width(config.imageWidth)
                                     .padding(horizontal = 16.dp)
                             )
                         }
@@ -174,9 +168,7 @@ fun RandomRecipesPreview() {
                     ),
                 )
             ),
-            cardAspectRatio = 4f / 2.5f,
-            textSize = 14.sp,
-            imageWidth = 300.dp
+           config = RecipeCardConfig()
         )
     }
 }
