@@ -17,6 +17,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,6 +29,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.ykcoding.recipefinderapp.helper.allSectionsAreLoading
+import com.ykcoding.recipefinderapp.helper.allSectionsFailedToLoad
+import com.ykcoding.recipefinderapp.presentation.ui.components.common.ErrorCardView
 import com.ykcoding.recipefinderapp.presentation.ui.components.config.RecipeCardConfig
 import com.ykcoding.recipefinderapp.presentation.ui.components.config.RecipeCardPresets
 import com.ykcoding.recipefinderapp.presentation.ui.theme.CharcoalBlack
@@ -88,10 +92,9 @@ fun HomeScreen(paddingValues: PaddingValues) {
                         modifier = Modifier.fillMaxWidth()
                     ) {
                         Text(
-                            text = "Got a tasty dish in mind?",
+                            text = "Got a tasty dish in mind? \nLet's Discover recipes",
                             textAlign = TextAlign.Start,
-                            fontSize = 28.sp,
-                            lineHeight = 32.sp,
+                            fontSize = 20.sp,
                             fontWeight = FontWeight.Black,
                             color = CharcoalBlack,
                             modifier = Modifier
@@ -107,26 +110,32 @@ fun HomeScreen(paddingValues: PaddingValues) {
                     Spacer(modifier = Modifier.height(4.dp))
                 }
             }
-            RecipeSection(
-                title = "Chef's Pick for you",
-                sectionState = state.randomRecipes,
-                cardConfig = RecipeCardPresets.LARGE
-            )
-            RecipeSection(
-                title = "What’s Trending",
-                sectionState = state.popularRecipes,
-                cardConfig = RecipeCardPresets.FEATURED
-            )
-            RecipeSection(
-                title = "Under 30 minutes",
-                sectionState = state.quickRecipes,
-                cardConfig = RecipeCardPresets.SMALL
-            )
-            RecipeSection(
-                title = "Healthy Plates",
-                sectionState = state.healthyRecipes,
-                cardConfig = RecipeCardPresets.COMPACT
-            )
+            if (state.allSectionsAreLoading()) {
+                CircularProgressIndicator()
+            } else if (!state.allSectionsFailedToLoad()) {
+                RecipeSection(
+                    title = "Chef's Pick for you",
+                    sectionState = state.randomRecipes,
+                    cardConfig = RecipeCardPresets.LARGE
+                )
+                RecipeSection(
+                    title = "What’s Trending",
+                    sectionState = state.popularRecipes,
+                    cardConfig = RecipeCardPresets.FEATURED
+                )
+                RecipeSection(
+                    title = "Under 30 minutes",
+                    sectionState = state.quickRecipes,
+                    cardConfig = RecipeCardPresets.SMALL
+                )
+                RecipeSection(
+                    title = "Healthy Plates",
+                    sectionState = state.healthyRecipes,
+                    cardConfig = RecipeCardPresets.COMPACT
+                )
+            } else {
+                ErrorCardView()
+            }
         }
     }
 }
@@ -137,9 +146,9 @@ fun RecipeSection(
     sectionState: HomeScreenUIState.SectionState,
     cardConfig: RecipeCardConfig = RecipeCardConfig()
 ) {
-    val isLoading = sectionState is HomeScreenUIState.SectionState.Error
+    val hasErrorOccurred = sectionState is HomeScreenUIState.SectionState.Error
 
-    if (!isLoading) {
+    if (!hasErrorOccurred) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
